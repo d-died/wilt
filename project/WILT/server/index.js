@@ -3,7 +3,21 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 app.set('port', process.env.PORT || 8000 )
+const db = require('./db/connection')
 
+
+
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'password',
+//     database: 'WILT'
+// })
+
+db.connect((err) => {
+    if (err) throw err
+    console.log('you are connected .......')
+})
 
 //==================================
 //MIDDLEWARE
@@ -18,9 +32,12 @@ app.use(express.urlencoded({ extended: true }))
 //ROUTES
 //==================================
 
-app.get('/', (req, res) => {
-    res.send('hello world')
-    // res.redirect('/home')
+app.get('/api', (req, res) => {
+    
+    db.query(wilt, err => {
+        if (err) throw err
+    })
+    res.send('db connected')
 })
 
 
