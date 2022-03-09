@@ -7,6 +7,7 @@ const db = require('./db/connection')
 
 
 
+
 // const db = mysql.createConnection({
 //     host: 'localhost',
 //     user: 'root',
@@ -14,10 +15,6 @@ const db = require('./db/connection')
 //     database: 'WILT'
 // })
 
-db.connect((err) => {
-    if (err) throw err
-    console.log('you are connected .......')
-})
 
 //==================================
 //MIDDLEWARE
@@ -32,21 +29,33 @@ app.use(express.urlencoded({ extended: true }))
 //ROUTES
 //==================================
 
-app.get('/api', (req, res) => {
-    
-    db.query(wilt, err => {
-        if (err) throw err
-    })
-    res.send('db connected')
+app.get('/', (req, res) => {
+    res.redirect('/posts')
 })
+
+//THIS CREATES A NEW TABLE IN SQL
+// app.get('/posts', (req, res) => {
+//     let posts = 'posts'
+    
+//     let query = `CREATE TABLE ${posts}
+//     (id INT AUTO_INCREMENT PRIMARY KEY,
+//     title VARCHAR(100),
+//     description VARCHAR(400))`
+
+//     db.query(query, (err, rows) => {
+//         if (err) return res.status(500).send('table creation failed')
+
+//         return res.send(`Successfully created table - ${posts}`)
+//     })
+// })
 
 
 //==================================
 //CONTROLLERS
 //==================================
 
-
-
+const PostController = require('./controllers/PostController')
+app.get('/posts', PostController)
 
 //==================================
 //START SERVER
@@ -58,6 +67,6 @@ app.use(( err, req, res, next ) => {
     res.status(statusCode).send(message)
 })
 
-app.listen(app.get('port'), () => {
-    console.log(`PORT: ${app.get('port')} CNXN YAS!`)
+app.listen(8000, () => {
+    console.log(`PORT: 8000 CNXN YAS!`)
 })
