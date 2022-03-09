@@ -1,8 +1,9 @@
+
 const express = require('express')
 const { models } = require('../db/connection')
 const router = express.Router()
 const db = require('../db/connection')
-const Post = require('../models/Posts')
+const Posts = require('../models/Posts')
 // const Post = db.post
 
 //GET all posts
@@ -12,17 +13,25 @@ const Post = require('../models/Posts')
 router.get('/', (req, res) => {
 
     
-    Post.findAll()
+    Posts.findAll()
     .then(posts => res.json(posts))
     .catch(err => console.log(err))
         // res.sendStatus(200)
 
 })
-// router.get('/:id', (req, res) => {
-//     // const id = req.params.id
-//     let sql = 'SELECT * FROM posts WHERE id=' + req.params.id
-//     // Post.findById(id)
-// })
+
+//GET ONE SINGLE
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    let sql = 'SELECT * FROM posts WHERE id=' + req.params.id
+    Posts.findAll({
+        where: {
+            id: req.params.id
+        }
+    })
+        .then(post => res.json(post))
+        .catch(err => console.log(err))
+})
     
     // db.query('SELECT * from posts', (err, rows) => {
     //     if(!err) {
@@ -37,7 +46,7 @@ router.get('/', (req, res) => {
 
 // CREATE/POST posts
 router.post('/', (req, res) => {
-    Post.create({
+    Posts.create({
         title: req.body.title,
         description: req.body.description,
         upvotes: req.body.upvotes
