@@ -1,19 +1,35 @@
 const mysql = require('mysql')
 require('dotenv').config()
 
-const db = mysql.createConnection({
+const { Sequelize } = require('@sequelize/core')
+module.exports = new Sequelize('wilt', 'root', process.env.DB_ACCESS_KEY, { 
     host: 'localhost',
-    user: 'root',
-    password: process.env.DB_ACCESS_KEY,
-    database: 'wilt'
+    dialect: 'mysql',
+    operatorsAliases: 0,
+
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    },
 })
 
-db.connect((err) => {
-    if (!err) {
-        console.log('CONNECTED!!')
-    } else {
-        console.log('Connection Failed womp!')
-    }
+
+
+// const db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: process.env.DB_ACCESS_KEY,
+//     database: 'wilt'
+// })
+
+// db.connect((err) => {
+//     if (!err) {
+//         console.log('CONNECTED!!')
+//     } else {
+//         console.log('Connection Failed womp!')
+//     }
 
     // let createPosts = CREATE TABLE if not exists `posts`(
     //     id int PRIMARY_KEY AUTO INCREMENT,
@@ -28,7 +44,6 @@ db.connect((err) => {
     // db.end((err) => {
     //     if (err) return console.log(err.message)
     // })
-})
 
 
-module.exports = db
+// module.exports = db

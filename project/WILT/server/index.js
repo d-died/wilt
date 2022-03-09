@@ -3,10 +3,9 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 app.set('port', process.env.PORT || 8000 )
+
+
 const db = require('./db/connection')
-
-
-
 
 // const db = mysql.createConnection({
 //     host: 'localhost',
@@ -33,6 +32,11 @@ app.get('/', (req, res) => {
     res.redirect('/posts')
 })
 
+app.use('/posts', require('./controllers/PostController'))
+
+// const postController = require('./controllers/PostController')
+// app.use('/posts', postController)
+
 //THIS CREATES A NEW TABLE IN SQL
 // app.get('/posts', (req, res) => {
 //     let posts = 'posts'
@@ -54,8 +58,8 @@ app.get('/', (req, res) => {
 //CONTROLLERS
 //==================================
 
-const PostController = require('./controllers/PostController')
-app.get('/posts', PostController)
+// const PostController = require('./controllers/PostController')
+// app.get('/posts', PostController)
 
 //==================================
 //START SERVER
@@ -70,3 +74,4 @@ app.use(( err, req, res, next ) => {
 app.listen(8000, () => {
     console.log(`PORT: 8000 CNXN YAS!`)
 })
+

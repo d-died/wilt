@@ -1,13 +1,25 @@
 const { Sequelize } = require('@sequelize/core')
 require('dotenv').config()
-const sequelize = new Sequelize('wilt', 'root', process.env.DB_ACCESS_KEY, {
-    host: 'localhost',
-    dialect: 'mysql'
+const db = require('../db/connection')
+
+const Post = db.define('posts', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+    },
+    title: Sequelize.STRING, 
+    description: Sequelize.TEXT,
+    upvotes: Sequelize.INTEGER,
+    createdAt: { 
+        type: Sequelize.DATE, 
+        defaultValue: Sequelize.NOW
+    },
+    updatedAt: { 
+        type: Sequelize.DATE, 
+        defaultValue: Sequelize.NOW
+    }
 })
 
-const Post = sequelize.define('Post', {
-    title: String, 
-    description: String
-})
+// console.log(Post === sequelize.models.Post)
 
-console.log(Post === sequelize.models.Post)
+module.exports = Post
