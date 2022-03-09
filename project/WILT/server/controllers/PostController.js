@@ -11,38 +11,24 @@ const Posts = require('../models/Posts')
 //     Post.find()
 // }
 router.get('/', (req, res) => {
-
     
     Posts.findAll()
     .then(posts => res.json(posts))
     .catch(err => console.log(err))
         // res.sendStatus(200)
-
 })
 
 //GET ONE SINGLE
 router.get('/:id', (req, res) => {
     const id = req.params.id
-    let sql = 'SELECT * FROM posts WHERE id=' + req.params.id
     Posts.findAll({
         where: {
-            id: req.params.id
+            id:  id 
         }
     })
         .then(post => res.json(post))
         .catch(err => console.log(err))
 })
-    
-    // db.query('SELECT * from posts', (err, rows) => {
-    //     if(!err) {
-    //         res.send(rows)
-    //     } else {
-    //         console.log(err)
-    //     }
-    // })
-    // postMessage.find()
-    // .then((posts) => res.json(posts))
-    // .catch(next)
 
 // CREATE/POST posts
 router.post('/', (req, res) => {
@@ -53,6 +39,19 @@ router.post('/', (req, res) => {
     })
         .then((post) => res.json(post))
         .catch(err => console.log(err, 'theres an error'))
+})
+
+
+//DELETE/DESTROY post
+router.delete('/:id', ( req, res ) => {
+    const id = req.params.id
+    Posts.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then((posts) => res.json(posts))
+    .then(err => console.log(err))
 })
 // router.post('/add', (req, res) => {
 
