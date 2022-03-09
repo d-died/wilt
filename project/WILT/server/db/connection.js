@@ -2,7 +2,7 @@ const mysql = require('mysql')
 require('dotenv').config()
 
 const { Sequelize } = require('@sequelize/core')
-module.exports = new Sequelize('wilt', 'root', process.env.DB_ACCESS_KEY, { 
+const sequelize = new Sequelize('wilt', 'root', process.env.DB_ACCESS_KEY, { 
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: 0,
@@ -15,7 +15,14 @@ module.exports = new Sequelize('wilt', 'root', process.env.DB_ACCESS_KEY, {
     },
 })
 
+// const db = {}
+// db.Sequelize = Sequelize
+// db.sequelize = sequelize
 
+
+// db.post = require('../models/Posts')(sequelize, Sequelize)
+async () => await sequelize.sync()()
+module.exports = { sequelize, Sequelize }
 
 // const db = mysql.createConnection({
 //     host: 'localhost',

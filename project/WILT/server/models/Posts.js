@@ -1,10 +1,14 @@
-const { Sequelize } = require('@sequelize/core')
 require('dotenv').config()
 const db = require('../db/connection')
 
-const Post = db.define('posts', {
+const sequelize = db.sequelize
+const Sequelize = db.Sequelize
+
+
+
+const Post = sequelize.define('post', {
     id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         primaryKey: true,
     },
     title: Sequelize.STRING, 
@@ -18,8 +22,12 @@ const Post = db.define('posts', {
         type: Sequelize.DATE, 
         defaultValue: Sequelize.NOW
     }
-})
+    })
 
-// console.log(Post === sequelize.models.Post)
+
+
+
+
+
 
 module.exports = Post

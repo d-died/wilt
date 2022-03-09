@@ -1,16 +1,29 @@
 const express = require('express')
+const { models } = require('../db/connection')
 const router = express.Router()
 const db = require('../db/connection')
 const Post = require('../models/Posts')
+// const Post = db.post
 
 //GET all posts
+// exports.index = ( req, res, next ) => {
+//     Post.find()
+// }
 router.get('/', (req, res) => {
+
+    
     Post.findAll()
-    .then(posts => {
-        console.log(posts)
-        res.sendStatus(200)
-    })
+    .then(posts => res.json(posts))
     .catch(err => console.log(err))
+        // res.sendStatus(200)
+
+})
+// router.get('/:id', (req, res) => {
+//     // const id = req.params.id
+//     let sql = 'SELECT * FROM posts WHERE id=' + req.params.id
+//     // Post.findById(id)
+// })
+    
     // db.query('SELECT * from posts', (err, rows) => {
     //     if(!err) {
     //         res.send(rows)
@@ -21,26 +34,36 @@ router.get('/', (req, res) => {
     // postMessage.find()
     // .then((posts) => res.json(posts))
     // .catch(next)
-})
 
 // CREATE/POST posts
-router.get('/add', (req, res) => {
-    const data = {
-        title: 'hello', 
-        description: 'radda radda',
-        upvotes: 69,
-    }
-
-    let { title, description, upvotes } = data
-
+router.post('/', (req, res) => {
     Post.create({
-        title,
-        description,
-        upvotes
+        title: req.body.title,
+        description: req.body.description,
+        upvotes: req.body.upvotes
     })
-    .then(post => res.redirect('/posts'))
-    .catch(err => console.log(err))
+        .then((post) => res.json(post))
+        .catch(err => console.log(err, 'theres an error'))
 })
+// router.post('/add', (req, res) => {
+
+//     // const data = {
+//     //     title: 'bing bing', 
+//     //     description: 'bing bongo radda radda',
+//     //     upvotes: 234342,
+//     // }
+
+//     // let { title, description, upvotes } = data
+
+//     db.query('INSERT INTO ')
+//     Post.create({
+//         title,
+//         description,
+//         upvotes
+//     })
+//     .then((post) => res.status(201).json(post))
+//     .catch(err => console.log(err))
+// })
 // router.post('/posts', (req, res) => {
 //     const sql = "INSERT INTO posts (title, description) VALUES (?, ?)"
 //     db.query(sql, {
