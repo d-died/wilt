@@ -1,33 +1,28 @@
 import React from 'react'
-import Nav from './components/Nav'
+import NavBar from './components/Nav/NavBar'
 import MyPosts from './components/MyPosts'
 import PostForm from './components/PostForm'
 import About from './components/About'
+import Intro from './components/Intro'
 
 
 function App() {
   return (
     <div className="App">
       <div className="scollbox">
-        <section className='home'>
-          <Nav />
+        <section id='home'>
+          <NavBar />
         </section>
-        <section className='intro'>
-          <h1>What I Learned Today</h1>
-          <h3>Welcome! This is a place to both give and receive. 
-            <br/>You give by sharing what you learned today. 
-            <br/>You receive by learning what others discovered today! 
-            <br/>Like Reddit but then we create connection through data visualization. 
-            <br/>No matter how big, small, mind-blowing, mundane, a skill, a fact, young, aged, scary, joyful. 
-            <br/>Feel free to share it all. </h3>
+        <section id='intro'>
+          <Intro />
         </section>
-        <section className='posts'>
+        <section id='posts'>
           <MyPosts />
         </section>
         <section>
           <PostForm />
         </section>
-        <section>
+        <section id='about'>
           <About />
         </section>
         
@@ -35,5 +30,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

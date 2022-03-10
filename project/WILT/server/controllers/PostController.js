@@ -7,7 +7,7 @@ const Posts = require('../models/Posts')
 
 
 router.get('/', (req, res) => {
-    
+    console.log('hello world')
     Posts.findAll()
     .then(posts => res.json(posts))
     .catch(err => console.log(err))
@@ -61,9 +61,17 @@ router.delete('/:id', ( req, res ) => {
 router.put('/:id', (req, res) => {
 
     const id = req.params.id
-    const postData = req.body
-    Posts.update({ postData }, { where: { id: id }})
-    
+    // const postData = req.body
+    // console.log(postData)
+    Posts.update( { 
+        title: req.body.title, 
+        description: req.body.description,
+        upvotes: req.body.upvotes
+     } , { where: { id: id }})
+    // .then((post) => res.json(post))
+    // .then((post) => console.log(post))
+    .then(() => { res.redirect('/posts') })
+    .then(err => console.log(err))
 })
 
 

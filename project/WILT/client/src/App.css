@@ -24,6 +24,8 @@ ul{
     width: 100%;
     font-family: 'Hubballi', cursive;
     font-size: 35px;
+    display: flex;
+    flex-direction: row;
 }
 
 section {
